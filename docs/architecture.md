@@ -51,6 +51,7 @@ src/
 │   │   └── ... // Otras páginas
 │   ├── app.component.[ts|html|scss]
 │   ├── app.module.ts
+│   ├── app.routes.ts
 │   └── app.routing.module.ts
 ...
 test/

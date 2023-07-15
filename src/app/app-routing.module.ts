@@ -1,18 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'landing' },
-  { path: 'landing', loadChildren: () => import('./modules/landing/landing.module').then(m => m.LandingModule) },
-  {
-    path: "**",
-    redirectTo: 'landing'
-  }
-];
+import { RouterModule } from '@angular/router';
+import routes from './app.routes';
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      initialNavigation: 'enabledBlocking'
+      initialNavigation: 'enabledBlocking',
+      scrollPositionRestoration: 'enabled'
     })
   ],
   exports: [RouterModule]
