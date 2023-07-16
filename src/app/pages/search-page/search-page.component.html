@@ -1,0 +1,15 @@
+<div>
+  <ps-searchbar (doSearch)="searchProductsByTitle($event)"></ps-searchbar>
+</div>
+
+<div *ngIf="vm$ | async as vm">
+  <ng-container *ngIf="vm.products?.data as products">
+    <p>Products:</p>
+    <div *ngFor="let product of products">
+      {{ product.id }} {{ product.title }}
+    </div>
+  </ng-container>
+  <ng-container *ngIf="vm.products?.error">
+    <p>Error loading products</p>
+  </ng-container>
+</div>

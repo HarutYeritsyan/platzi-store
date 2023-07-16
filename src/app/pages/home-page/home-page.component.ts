@@ -1,38 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '@features/products/domain/models/product.model';
-import { ProductService } from '@features/products/application/usecases/product.service';
-import { Observable, catchError, combineLatest, map, of } from 'rxjs';
-
-interface VM {
-  products: { data?: Product[]; error?: unknown; }
-}
+import { SearchbarComponent } from '@core/infra/ui/components/searchbar/searchbar.component';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'ps-home-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SearchbarComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
-
-  vm$?: Observable<VM>;
+export class HomePageComponent {
 
   constructor(
-    private productService: ProductService
+    private readonly router: Router
   ) { }
 
-  ngOnInit() {
-    this.vm$ = combineLatest({
-      products: this.getProductsWithErrorStatus()
+  searchProductsByTitle(title: string) {
+    this.router.navigate(['buscador'], {
+      queryParams: {
+        title
+      }
     });
-  }
-
-  private getProductsWithErrorStatus() {
-    return this.productService.getProducts().pipe(
-      map(data => ({ data })),
-      catchError(error =>  of({ error }))
-    )
   }
 }
