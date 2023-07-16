@@ -5,3 +5,17 @@ An online store frontend application with Angular that consumes Platzi Fake Stor
 ## Documentation(ES)
 
 [Architecture](./docs/architecture.md)
+
+## Development 
+
+Commands to execute in order to build and serve the website locally
+
+#### SPA
+```code
+npm run start
+```
+
+#### SSR
+```code
+npm run dev:ssr
+```
