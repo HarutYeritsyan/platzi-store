@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ProductRepository } from '@features/products/ports/product-repository.port';
 import { Product } from '@features/products/domain/models/product.model';
+import { CONFIG } from '@core/infra/config/tokens/config.token';
+import { Config } from '@core/infra/config/models/config.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpProductRepositoryService implements ProductRepository {
-
-  private static readonly API_URL = 'https://api.escuelajs.co/api/v1';
   
   constructor(
+    @Inject(CONFIG) private readonly config: Config,
     private http: HttpClient
   ) { }
 
@@ -20,6 +21,6 @@ export class HttpProductRepositoryService implements ProductRepository {
   }
 
   private getApiEndpointUrl(endpoint: string) {
-    return `${HttpProductRepositoryService.API_URL}${endpoint}`;
+    return `${this.config?.env?.platziHttpApiUrl}${endpoint}`;
   }
 }
