@@ -17,6 +17,9 @@ export class HomePageComponent {
   ) { }
 
   searchProductsByTitle(title: string) {
+    if (!title?.length) {
+      return;
+    }
     this.router.navigate(['buscador'], {
       queryParams: {
         title
