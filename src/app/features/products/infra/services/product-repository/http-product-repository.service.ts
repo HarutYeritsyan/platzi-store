@@ -20,6 +20,33 @@ export class HttpProductRepositoryService implements ProductRepository {
     return this.http.get<Product[]>(url);
   }
 
+  getProductsByTitle(title: string) {
+    return this.getProductsByFilters({ title });
+  }
+
+  getProductsByPriceRange(priceMin?: number, priceMax?: number) {
+    return this.getProductsByFilters({ priceMin, priceMax });
+  }
+
+  getProductsByCategoryId(categoryId: string) {
+    return this.getProductsByFilters({ categoryId });
+  }
+
+  getProduct(id: string) {
+    const url = this.getApiEndpointUrl(`/products/${id}`);
+    return this.http.get<Product>(url);
+  }
+
+  private getProductsByFilters(filters: Partial<{
+    title: string;
+    priceMin: number;
+    priceMax: number;
+    categoryId: string;
+  }>) {
+    const url = this.getApiEndpointUrl('/products');
+    return this.http.get<Product[]>(url, { params: filters });
+  }
+
   private getApiEndpointUrl(endpoint: string) {
     return `${this.config?.env?.platziHttpApiUrl}${endpoint}`;
   }

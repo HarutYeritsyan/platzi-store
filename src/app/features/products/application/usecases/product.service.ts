@@ -14,4 +14,20 @@ export class ProductService {
   getProducts() {
     return this.productRepository.getProducts();
   }
+
+  getProductsByTitle(title: string) {
+    return this.productRepository.getProductsByTitle(title);
+  }
+
+  getProductsByPriceRange(priceMin?: number, priceMax?: number) {
+    return this.productRepository.getProductsByPriceRange(priceMin, priceMax);
+  }
+
+  getProductsByCategoryId(categoryId: string) {
+    return this.productRepository.getProductsByCategoryId(categoryId);
+  }
+
+  getProduct(id: string) {
+    return this.productRepository.getProduct(id);
+  }
 }
