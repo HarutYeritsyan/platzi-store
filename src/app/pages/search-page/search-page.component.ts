@@ -4,7 +4,7 @@ import { Observable, catchError, combineLatest, filter, map, of, switchMap } fro
 import { Product } from '@features/products/domain/models/product.model';
 import { ProductService } from '@features/products/application/usecases/product.service';
 import { SearchbarComponent } from '@core/infra/ui/components/searchbar/searchbar.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 interface VM {
   products: {
@@ -16,7 +16,7 @@ interface VM {
 @Component({
   selector: 'ps-search-page',
   standalone: true,
-  imports: [CommonModule, SearchbarComponent],
+  imports: [CommonModule, SearchbarComponent, RouterModule],
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss']
 })

@@ -1,0 +1,48 @@
+<div *ngIf="vm$ | async as vm">
+  <ng-container *ngIf="vm.product?.data as product">
+    <p>Product:</p>
+    <div>
+      <div>
+        ID: {{ product.id }}
+      </div>
+      <div>
+        Title: {{ product.title }}
+      </div>
+      <div>
+        Description: {{ product.description }}
+      </div>
+      <div *ngIf="product.images?.length">
+        <ng-container
+          [ngTemplateOutlet]="imageGallery"
+          [ngTemplateOutletContext]="{
+            images: product.images,
+            defaultAlt: product.title
+          }">
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="vm.product?.error">
+    <p>Error loading product</p>
+  </ng-container>
+</div>
+
+<ng-template #imageGallery let-images="images" let-defaultAlt="defaultAlt">
+  <ng-container *ngFor="let imageSrc of images">
+    <div>
+      <ng-container
+        [ngTemplateOutlet]="imageContainer"
+        [ngTemplateOutletContext]="{
+          imageSrc: imageSrc,
+          alt: defaultAlt
+        }">
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #imageContainer let-image="imageSrc" let-alt="alt">
+  <div>
+    <img [src]="image" [alt]="alt">
+  </div>
+</ng-template>

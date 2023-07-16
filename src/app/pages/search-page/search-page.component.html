@@ -7,6 +7,7 @@
     <p>Products:</p>
     <div *ngFor="let product of products">
       {{ product.id }} {{ product.title }}
+      <a [routerLink]="'/producto/' + product.id">See product</a>
     </div>
   </ng-container>
   <ng-container *ngIf="vm.products?.error">
