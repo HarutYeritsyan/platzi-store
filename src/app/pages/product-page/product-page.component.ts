@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '@features/products/domain/models/product.model';
 import { Observable, catchError, combineLatest, filter, map, of, switchMap } from 'rxjs';
-import { ProductService } from '../../features/products/application/usecases/product.service';
+import { ProductService } from '@features/products/application/usecases/product.service';
 import { ActivatedRoute } from '@angular/router';
 
 interface VM {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, combineLatest, filter, map, of, switchMap, tap } from 'rxjs';
+import { Observable, combineLatest, map, switchMap, tap } from 'rxjs';
 import { Product, ProductCategory } from '@features/products/domain/models/product.model';
 import { ProductService } from '@features/products/application/usecases/product.service';
 import { SearchbarComponent } from '@core/infra/ui/components/searchbar/searchbar.component';
