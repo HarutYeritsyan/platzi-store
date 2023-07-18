@@ -1,28 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, catchError, combineLatest, filter, map, of, switchMap } from 'rxjs';
-import { Product } from '@features/products/domain/models/product.model';
+import { Observable, combineLatest, filter, map, of, switchMap, tap } from 'rxjs';
+import { Product, ProductCategory } from '@features/products/domain/models/product.model';
 import { ProductService } from '@features/products/application/usecases/product.service';
 import { SearchbarComponent } from '@core/infra/ui/components/searchbar/searchbar.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { DataWithCompletionStatus, withCompletionStatus } from '@core/utils/rxjs-utils';
 
 interface VM {
-  products: {
-    data?: Product[];
-    error?: unknown;
-  };
+  products: DataWithCompletionStatus<Product[]>;
+  availableCategoriesForFilter: DataWithCompletionStatus<ProductCategory[]>;
 }
 
 @Component({
   selector: 'ps-search-page',
   standalone: true,
-  imports: [CommonModule, SearchbarComponent, RouterModule],
+  imports: [CommonModule, SearchbarComponent, RouterModule, FormsModule],
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit {
 
   vm$?: Observable<VM>;
+
+  searchText = '';
+  selectedCategoryIdForFilter?: number;
 
   constructor(
     private productService: ProductService,
@@ -32,35 +35,43 @@ export class SearchPageComponent implements OnInit {
 
   ngOnInit() {
     this.vm$ = combineLatest({
-      products: this.getSearchedProductsByTitle()
+      products: this.getSearchedProducts(),
+      availableCategoriesForFilter: withCompletionStatus(this.productService.getCategories())
     });
   }
 
-  searchProductsByTitle(title: string) {
+  searchProducts() {
+    this.updateSearchQueryParams();
+  }
+
+  private updateSearchQueryParams() {
     this.router.navigate(['buscador'], {
       queryParams: {
-        title
+        title: this.searchText,
+        categoryId: this.selectedCategoryIdForFilter
       }
     });
   }
 
-  getSearchedProductsByTitle() {
-    return this.getSearchTerm().pipe(
-      filter(title => !!title?.length),
-      switchMap(title => this.getProductsWithCompletionStatus(title))
+  private getSearchedProducts() {
+    return this.getSearchTermAndFiltersFromQueryParams().pipe(
+      switchMap(searchParams => withCompletionStatus(this.productService.searchProducts(searchParams.title, { categoryId: searchParams.categoryId })))
     );
   }
 
-  getSearchTerm() {
+  private getSearchTermAndFiltersFromQueryParams() {
     return this.route.queryParams.pipe(
-      map(params => params?.['title'] as string)
-    );
-  }
-
-  private getProductsWithCompletionStatus(title: string) {
-    return this.productService.getProductsByTitle(title).pipe(
-      map(data => ({ data })),
-      catchError(error =>  of({ error }))
+      map(params => {
+        const parsedCategoryIdQueryParam = parseInt(params?.['categoryId'] as string);
+        return {
+          title: params?.['title'] as string,
+          categoryId: isNaN(parsedCategoryIdQueryParam) ? undefined : parsedCategoryIdQueryParam,
+        };
+      }),
+      tap(params => {
+        this.searchText = params?.title;
+        this.selectedCategoryIdForFilter = params?.categoryId;
+      })
     );
   }
 }

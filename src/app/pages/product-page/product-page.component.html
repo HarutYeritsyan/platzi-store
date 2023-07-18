@@ -1,15 +1,15 @@
 <div *ngIf="vm$ | async as vm">
   <ng-container *ngIf="vm.product?.data as product">
-    <p>Product:</p>
+    <p>Producto:</p>
     <div>
       <div>
         ID: {{ product.id }}
       </div>
       <div>
-        Title: {{ product.title }}
+        Título: {{ product.title }}
       </div>
       <div>
-        Description: {{ product.description }}
+        Descripción: {{ product.description }}
       </div>
       <div *ngIf="product.images?.length">
         <ng-container
@@ -23,7 +23,7 @@
     </div>
   </ng-container>
   <ng-container *ngIf="vm.product?.error">
-    <p>Error loading product</p>
+    <p>Error cargando producto</p>
   </ng-container>
 </div>
 

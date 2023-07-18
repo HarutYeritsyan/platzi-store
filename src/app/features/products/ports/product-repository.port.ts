@@ -1,10 +1,9 @@
 import { Observable } from 'rxjs';
-import { Product } from '@features/products/domain/models/product.model';
+import { Product, ProductCategory } from '@features/products/domain/models/product.model';
 
 export interface ProductRepository {
   getProducts(): Observable<Product[]>;
-  getProductsByTitle(title: string): Observable<Product[]>;
-  getProductsByPriceRange(priceMin?: number, priceMax?: number): Observable<Product[]>;
-  getProductsByCategoryId(categoryId: string): Observable<Product[]>;
+  searchProducts(title: string, filters?: Partial<{ priceMin: number; priceMax: number; categoryId: number }>): Observable<Product[]>;
   getProduct(id: string): Observable<Product>;
+  getCategories(): Observable<ProductCategory[]>;
 }

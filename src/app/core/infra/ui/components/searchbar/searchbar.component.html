@@ -1,6 +1,12 @@
-<form (ngSubmit)="onSearch(searchInput.value)">
-  <input #searchInput type="search" [value]="searchTerm">
-  <button type="submit">
-    Buscar
+<div>
+  <input
+    type="search"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="setInputValue($event)"
+    (blur)="onInputBlur()"
+    (keyup.enter)="onSearch()">
+  <button (click)="onSearch()">
+    {{ buttonText }}
   </button>
-</form>
+</div>

@@ -1,16 +1,45 @@
-<div>
-  <ps-searchbar (doSearch)="searchProductsByTitle($event)"></ps-searchbar>
-</div>
+<ng-container *ngIf="vm$ | async as vm">
+  
+  <div>
 
-<div *ngIf="vm$ | async as vm">
-  <ng-container *ngIf="vm.products?.data as products">
-    <p>Products:</p>
-    <div *ngFor="let product of products">
-      {{ product.id }} {{ product.title }}
-      <a [routerLink]="'/producto/' + product.id">See product</a>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="vm.products?.error">
-    <p>Error loading products</p>
-  </ng-container>
-</div>
+      <div>
+        <div>
+          {{
+            vm.products.data?.length
+              ? 'Puedes volver a buscar productos:'
+              : 'Oops, no se han encontrado resultados. Puedes volver a hacer una búsqueda:'
+          }}
+        </div>
+
+        <br>
+
+        <div>
+          <ps-searchbar [(ngModel)]="searchText" (doSearch)="searchProducts()"></ps-searchbar>
+        </div>
+
+        <br>
+
+        <div *ngIf="vm.availableCategoriesForFilter?.data; let categories">
+          <div *ngIf="categories?.length">
+            <select [(ngModel)]="selectedCategoryIdForFilter">
+              <option [ngValue]="undefined">
+                Seleccionar categoría
+              </option>
+              <option *ngFor="let category of categories" [ngValue]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="vm.products?.data?.length">
+        <p>Productos:</p>
+        <div *ngFor="let product of vm.products?.data">
+          {{ product.id }} {{ product.title }}
+          <a [routerLink]="'/productos/' + product.id">Ver producto</a>
+        </div>
+      </ng-container>
+  </div>
+
+</ng-container>
