@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '@features/products/domain/models/product.model';
-import { Observable, catchError, combineLatest, filter, map, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, filter, map, switchMap } from 'rxjs';
 import { ProductService } from '@features/products/application/usecases/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { withCompletionStatus } from '../../core/utils/rxjs-utils';
 
 interface VM {
   product: {
@@ -38,20 +39,13 @@ export class ProductPageComponent implements OnInit {
     return this.getProductId().pipe(
       map(id => id ?? ''),
       filter(id => !!id),
-      switchMap(id => this.getProductDetailWithCompletionStatus(id))
+      switchMap(id => withCompletionStatus(this.productService.getProduct(id)))
     );
   }
 
   private getProductId() {
     return this.route.paramMap.pipe(
       map(paramMap => paramMap.get('id'))
-    );
-  }
-
-  private getProductDetailWithCompletionStatus(id: string) {
-    return this.productService.getProduct(id).pipe(
-      map(data => ({ data })),
-      catchError(error => of({ error }))
     );
   }
 }
