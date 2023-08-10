@@ -20,7 +20,7 @@ npm run start
 npm run dev:ssr
 ```
 
-# Nice to have
+## Nice to have
 
 Nice to have technologies:
 - Visual Testing
