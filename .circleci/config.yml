@@ -1,7 +1,9 @@
 version: 2.1
 orbs:
   angular: okode/angular@2.0.13
+
 workflows:
   build-and-test:
     jobs:
-      - angular/build
+      - angular/build:
+        project: $test
