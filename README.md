@@ -20,10 +20,13 @@ npm run start
 npm run dev:ssr
 ```
 
+### CI/CD
+
+Using CircleCI with okode/angular orbs
+
 ## Nice to have
 
 Nice to have technologies:
 - Visual Testing
-- CI/CD
 - Nx
 - Microfrontends
