@@ -4,7 +4,7 @@ import { Product } from '@features/products/domain/models/product.model';
 import { Observable, combineLatest, filter, map, switchMap } from 'rxjs';
 import { ProductService } from '@features/products/application/usecases/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { withCompletionStatus } from '../../core/utils/rxjs-utils';
+import { withCompletionStatus } from '@core/utils/rxjs-utils';
 
 interface VM {
   product: {
