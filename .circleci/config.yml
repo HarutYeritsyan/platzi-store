@@ -6,4 +6,4 @@ workflows:
   build-and-test:
     jobs:
       - angular/build:
-        project: $test
+        project: platzi-store
