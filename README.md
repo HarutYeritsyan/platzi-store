@@ -19,3 +19,11 @@ npm run start
 ```code
 npm run dev:ssr
 ```
+
+## Nice to have
+
+Nice to have technologies:
+- Visual Testing
+- CI/CD
+- Nx
+- Microfrontends
