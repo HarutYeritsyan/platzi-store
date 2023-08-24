@@ -8,3 +8,5 @@ workflows:
     jobs:
       - angular/build:
           project: "platzi-store"
+      - angular/test:
+          project: "platzi-store"
