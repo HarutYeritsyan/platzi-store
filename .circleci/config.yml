@@ -1,14 +1,8 @@
 version: 2.1
 orbs:
   angular: okode/angular@2.0.13
-
-jobs:
-  build:
-    steps:
-      - checkout
-      - angular/build:
-        project: platzi-store
 workflows:
   build-store:
     jobs:
-      - build
+      - angular/build:
+        project: "platzi-store"
