@@ -8,6 +8,6 @@ jobs:
       - checkout
       - angular/build
 workflows:
-  build:
+  build-store:
     jobs:
       - build
