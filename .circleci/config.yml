@@ -6,8 +6,6 @@ jobs:
   build:
     steps:
       - checkout
-      - angular/build:
-        project: 'platzi-store'
 
 workflows:
   build:
