@@ -1,8 +1,10 @@
 version: 2.1
+
 orbs:
   angular: okode/angular@2.0.13
+
 workflows:
   build-store:
     jobs:
       - angular/build:
-        project: "platzi-store"
+          project: "platzi-store"
