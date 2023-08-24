@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - angular/build:
-        project: "platzi-store"
+        project: platzi-store
 workflows:
   build-store:
     jobs:
